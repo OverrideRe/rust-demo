@@ -1,3 +1,6 @@
+mod collections;
+mod iter;
+
 #[cfg(test)]
 mod tests {
     #[test]
