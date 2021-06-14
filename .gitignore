@@ -2,6 +2,7 @@
 */target
 */.idea
 */.vscode
+./idea
 
 */src/*.exe
 */src/*.pdb
