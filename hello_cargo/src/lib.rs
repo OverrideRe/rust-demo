@@ -1,6 +1,12 @@
+//! # 第一次rust测试项目
+//! 根目录
+
 mod collections;
 mod iter;
+mod my_match;
 
+/// # 第一个测试方法
+/// assert_eq!(2 + 2, 4);
 #[cfg(test)]
 mod tests {
     #[test]

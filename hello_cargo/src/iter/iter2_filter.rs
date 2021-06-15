@@ -1,9 +1,12 @@
+//! #迭代器学习
+
 #[derive(PartialEq, Debug)]
 struct Shoe {
     size: i32,
     style: String,
 }
 
+/// # 查找指定鞋码的鞋
 fn shoes_in_my_size(shoes: Vec<Shoe>, size: i32) -> Vec<Shoe> {
     shoes.into_iter()
         .filter(|s| s.size == size)

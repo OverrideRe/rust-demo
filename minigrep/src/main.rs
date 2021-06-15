@@ -4,10 +4,8 @@ use std::process;
 use minigrep::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    
     // eprintln!会将标准错误输出到屏幕，标准输出则写入后面跟着的文件
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
         eprintln!("Problem parsing argument: {}", err);
         process::exit(1);
     });
