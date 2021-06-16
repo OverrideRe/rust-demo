@@ -4,6 +4,7 @@
 mod collections;
 mod iter;
 mod my_match;
+mod my_box;
 
 /// # 第一个测试方法
 /// assert_eq!(2 + 2, 4);
