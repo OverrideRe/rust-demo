@@ -11,7 +11,7 @@ mod refcell_test {
     struct Storage0 {
         list: Vec<String>
     }
-
+    
     /// 当send中的self是不可变引用时，下面的实现会报错，因为调用了self的list更改值
     /// 当send中的self是可变引用时，UserStorage中的use_storage会编译报错，因为函数中的self也是不可变引用
     // impl Storage for Storage0 {
@@ -26,6 +26,7 @@ mod refcell_test {
     }
 
     /// 第二种方式使用了RefCell，RefCell可以实现内部可变，borrow_mut就是获取RefCell修饰对象的可变借用
+    /// RefCell只允许多个不可变借用和一个可变借用，所以如果连续调用多次borrow_mut虽然不会报编译错误，但是运行时会报错
     impl Storage for Storage1 {
         fn send(&self, str: &str) {
             self.list.borrow_mut().push(str.to_string());
@@ -70,5 +71,36 @@ mod refcell_test {
         use_storage.use_storage("str1");
 
         assert_eq!(s.list.borrow().len(), 3);
+    }
+}
+
+
+/// RefCell和Rc结合使用，创造可以修改并且能拥有多个所有者的变量
+#[cfg(test)]
+mod refcell_rc {
+    use std::{cell::RefCell, rc::Rc};
+
+    #[derive(Debug)]
+    enum Node {
+        list(Rc<RefCell<i32>>, Rc<Node>),
+        Nil,
+    }
+
+    use crate::my_box::refcell::refcell_rc::Node::{list, Nil};
+
+    #[test]
+    fn test() {
+        let value = Rc::new(RefCell::new(3));
+
+        let a = Rc::new(list(Rc::clone(&value), Rc::new(Nil)));
+
+        let b = list(Rc::new(RefCell::new(2)), Rc::clone(&a));
+        let c = list(Rc::new(RefCell::new(1)), Rc::clone(&a));
+
+        *value.borrow_mut() += 10;
+
+        println!("a after = {:?}", a);
+        println!("b after = {:?}", b);
+        println!("c after = {:?}", c);
     }
 }
