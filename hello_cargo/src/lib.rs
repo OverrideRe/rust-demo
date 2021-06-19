@@ -1,6 +1,7 @@
 //! # 第一次rust测试项目
 //! 根目录
 
+mod closure;
 mod collections;
 mod iter;
 mod my_match;
