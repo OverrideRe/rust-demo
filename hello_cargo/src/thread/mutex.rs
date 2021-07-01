@@ -14,7 +14,7 @@ fn test0() {
     println!("m: {:?}", m);
 }
 
-/// Arc和Rc类似，都是给一个对象提供多个所有者引用，不同的是Arc是线程安全的
+/// Arc和Rc类似，都是给一个对象提供多个所有者引用，不同的是Arc是线程安全的。Arc可以提供多个线程访问，Mutex又是线程互斥的，所以两者结合就能实现数字顺序递增
 #[test]
 fn test1() {
     let counter = Arc::new(Mutex::new(0));
