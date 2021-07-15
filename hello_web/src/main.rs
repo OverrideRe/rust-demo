@@ -1,11 +1,16 @@
 
-use std::{fs, io::{Read, Write}, net::{TcpListener, TcpStream}};
+use std::{fs, io::{Read, Write}, net::{TcpListener, TcpStream}, thread, time::Duration};
+
+use hello_web::ThreadPool;
 
 fn main() {
+    let threadPool = ThreadPool::new(5);
+    
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-        handle_connection(stream);
+        threadPool.execute(|| handle_connection(stream));
+        // handle_connection(stream);
     }
     println!("Hello, world!");
 }
@@ -22,6 +27,7 @@ fn handle_connection(mut stream: TcpStream) {
     let (status_line, file_name) = if buffer.starts_with(get) {
         ("HTTP/1.1 200 OK\r\n\r\n", "resources/hello.html")
     } else {
+        thread::sleep(Duration::from_secs(5));
         ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "resources/404.html")
     };
 
