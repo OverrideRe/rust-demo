@@ -4,12 +4,12 @@ use std::{fs, io::{Read, Write}, net::{TcpListener, TcpStream}, thread, time::Du
 use hello_web::ThreadPool;
 
 fn main() {
-    let threadPool = ThreadPool::new(5);
+    let thread_pool = ThreadPool::new(5);
     
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-        threadPool.execute(|| handle_connection(stream));
+        thread_pool.execute(|| handle_connection(stream));
         // handle_connection(stream);
     }
     println!("Hello, world!");
