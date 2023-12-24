@@ -1,6 +1,0 @@
-.vscode
-.idea
-target
-
-src/*.exe
-src/*.pdb

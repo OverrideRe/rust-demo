@@ -2,8 +2,12 @@
 */target
 */.idea
 */.vscode
+*/Cargo.lock
 ./idea
 
 */src/*.exe
 */src/*.pdb
+
+target
+Cargo.lock
 
